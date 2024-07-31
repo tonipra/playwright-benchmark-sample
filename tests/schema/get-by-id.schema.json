@@ -1,0 +1,28 @@
+{
+    "title": "Root Schema",
+    "type": "object",
+    "required": [
+        "userId",
+        "id",
+        "title",
+        "body"
+    ],
+    "properties": {
+        "userId": {
+            "title": "The userId Schema",
+            "type": "integer"
+        },
+        "id": {
+            "title": "The id Schema",
+            "type": "integer"
+        },
+        "title": {
+            "title": "The title Schema",
+            "type": "string"
+        },
+        "body": {
+            "title": "The body Schema",
+            "type": "string"
+        }
+    }
+}
