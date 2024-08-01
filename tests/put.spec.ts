@@ -1,12 +1,20 @@
 import { test, expect } from '@playwright/test';
 import Ajv from 'ajv';
 
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+  [key: string]: any; // Allow additional properties
+}
+
 test.describe('Put and Check Response Schema', () => {
 
   const ajv = new Ajv();
 
   test('Put', async ({ request }) => {
-      // get by id
+      // put by id
       const responsePut = await request.put(`https://jsonplaceholder.typicode.com/posts/1`, {
         data: {
           id: 1,
@@ -20,7 +28,7 @@ test.describe('Put and Check Response Schema', () => {
       expect(responsePut.ok()).toBeTruthy();
       
       // parse
-      const responsePutJson = JSON.parse(await responsePut.text());
+      const responsePutJson: Post = JSON.parse(await responsePut.text());
 
       // assert value
       expect(responsePutJson.id).toBe(1);
@@ -28,10 +36,10 @@ test.describe('Put and Check Response Schema', () => {
       expect(responsePutJson.body).toBe('bar');
       expect(responsePutJson.userId).toBe(1);
 
-      //check json schema
-      const valid = ajv.validate(require('./schema/get-by-id.schema.json'), responsePutJson);
+      // check json schema
+      const schema = require('./schema/get-by-id.schema.json');
+      const valid = ajv.validate(schema, responsePutJson) as boolean;
       expect(valid).toBe(true);
 
   });  
 });
-

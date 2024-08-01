@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 import Ajv from 'ajv';
 
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+  [key: string]: any; // Allow additional properties
+}
+
 test.describe('Get and Check Response Schema', () => {
 
   const ajv = new Ajv();
@@ -12,11 +20,10 @@ test.describe('Get and Check Response Schema', () => {
       // check response code
       expect(responseGet.ok()).toBeTruthy();
 
-      //parse & check json schema
-      const responseGetJson = JSON.parse(await responseGet.text());
-      const valid = ajv.validate(require('./schema/get.schema.json'), responseGetJson);
+      // parse & check json schema
+      const responseGetJson: Post[] = JSON.parse(await responseGet.text());
+      const schema = require('./schema/get.schema.json');
+      const valid = ajv.validate(schema, responseGetJson) as boolean;
       expect(valid).toBe(true);
-
   });  
 });
-
