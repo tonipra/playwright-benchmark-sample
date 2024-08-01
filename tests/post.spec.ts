@@ -23,6 +23,9 @@ test.describe('Post and Check Response Schema', () => {
 
       // assert value
       expect(responsePostJson.title).toBe('foo');
+      expect(responsePostJson.body).toBe('bar');
+      expect(responsePostJson.userId).toBe(1);
+
 
       //check json schema
       const valid = ajv.validate(require('./schema/get-by-id.schema.json'), responsePostJson);
