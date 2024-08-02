@@ -21,7 +21,7 @@ test.describe('Get and Check Response Schema', () => {
       expect(responseGet.ok()).toBeTruthy();
 
       // parse & check json schema
-      const responseGetJson: Post[] = JSON.parse(await responseGet.text());
+      const responseGetJson: Post[] = await responseGet.json();
       const schema = require('./schema/get.schema.json');
       const valid = ajv.validate(schema, responseGetJson) as boolean;
       expect(valid).toBe(true);

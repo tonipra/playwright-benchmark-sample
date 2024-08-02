@@ -26,7 +26,7 @@ test.describe('Post and Check Response Schema', () => {
       expect(responsePost.ok()).toBeTruthy();
       
       // parse
-      const responsePostJson: PostResponse = JSON.parse(await responsePost.text());
+      const responsePostJson: PostResponse = await responsePost.json();
 
       // assert value
       expect(responsePostJson.title).toBe('foo');

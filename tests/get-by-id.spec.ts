@@ -21,7 +21,7 @@ test.describe('Get by ID and Check Response Schema', () => {
       expect(responseGet.ok()).toBeTruthy();
 
       // parse
-      const responseGetJson: Post = JSON.parse(await responseGet.text());
+      const responseGetJson: Post = await responseGet.json();
 
       // assert value
       expect(responseGetJson.userId).toBe(1);
